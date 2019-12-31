@@ -4,7 +4,7 @@
 
 Be ready for *all* moves
 
-Based on [lichess' chessground](https://github.com/ornicar/chessground-examples) and [lichess API](https://lichess.org/api)
+Based on [lichess' chessground](https://github.com/ornicar/chessground-examples) and [Stockfish](https://github.com/niklasf/stockfish.js)
 
 
 ### Setup
@@ -22,6 +22,6 @@ yarn test
 
 ### Demo
 
-[Mistake-o-tron](https://tailuge.github.io/omnip-o-tron/index.html)
+[Omnip-o-tron](https://tailuge.github.io/omnip-o-tron/index.html)
 
 

@@ -1,7 +1,7 @@
 {
-  "name": "mistake-o-tron",
+  "name": "omnip-o-tron",
   "version": "1.0.0",
-  "description": "reuse lichess analysis from past games",
+  "description": "be ready for any move",
   "main": "dist/main.js",
   "author": "tailuge",
   "license": "GPL-3.0",
