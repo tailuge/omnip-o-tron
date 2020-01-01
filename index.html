@@ -12,36 +12,9 @@
 <body>
     <h2><a href="https://github.com/tailuge/omnip-o-tron">Omnip-o-tron</a></h2>
     <div class="inputs">
-        <a href="https://lichess.org/api">Lichess</a> player:
-        <input type="text" id="player" name="player" value="tailuge" onkeydown="pressEnter(event)" /> Analysed games to fetch:
-        <input type="text" name="games" id="games" value="2" onkeydown="pressEnter(event)" /> Severity <select id="severity" onchange="recompute()">
-    <option value="" selected="selected">Any</option>
-     <option value="Inaccuracy">Inaccuracy</option>
-     <option value="Mistake">Mistake</option>
-     <option value="Blunder">Blunder</option>
-    </select> Game Phase
-        <select id="phase" onchange="recompute()">
-     <option value="" selected="selected">Any</option>
-     <option value="Opening">Opening</option>
-     <option value="Middlegame">Middlegame</option>
-     <option value="Endgame">Endgame</option>
-    </select> Colour
-        <select id="colour" onchange="recompute()">
-     <option value="" selected="selected">Any</option>
-     <option value="white">White</option>
-     <option value="black">Black</option>
-    </select> Time control:
-        <select id="timecontrol" onchange="recompute()">
-  	 <option value="" selected="selected">Any</option>
-  	 <option value="classical">Classical</option>
-  	 <option value="rapid">Rapid</option>
-  	 <option value="blitz">Blitz</option>
-  	 <option value="bullet">Bullet</option>
-  	 <option value="ultraBullet">UltraBullet</option>
-  	 <option value="unlimited">Unlimited</option>
-  	 <option value="correspondence">Correspondence</option>
-		</select>
-        <input type="submit" id="Search" value="Fetch data" onclick="search()">
+        FEN:
+        <input type="text" id="fen" name="fen" value="rn1qkbnr/pp3pp1/2p1p2p/3p1b2/2PP1B2/4PN2/PP3PPP/RN1QKB1R w KQkq - 0 6" onkeydown="pressEnter(event)" /> 
+        <input type="submit" id="Search" value="Begin" onclick="search()">
     </div>
 
     <pre class="inputs" id="log"></pre>
@@ -50,37 +23,17 @@
     <script>
         /* global bundle */
 
-        var api = new bundle.LichessApi("https://lichess.org");
         var boards = new bundle.Boards(document.getElementById('chessground-examples'));
+        var sf = loadStockfish();
         var puzzles = [];
         var all = [];
 
         function search() {
             all = [];
             puzzles = [];
-            var total = document.getElementById('games').value;
-            var player = document.getElementById('player').value;
-            status("Fetching data...");
+            var fen = document.getElementById('fen').value;
+            status("Using FEN: " + fen);
             boards.setPuzzles([]);
-            api.games(player, total,
-                x => {
-                    all.push(x);
-                    status("Fetching : " + all.length + " of " + total);
-                    puzzles = puzzles.concat((new bundle.Analysis(x)).puzzles(player));
-                    recompute();
-                },
-                () => {});
-        }
-
-        function filter(puzzles) {
-            const filtered = puzzles
-                .filter(bundle.severity(document.getElementById('severity').value))
-                .filter(bundle.timecontrol(document.getElementById('timecontrol').value))
-                .filter(bundle.colour(document.getElementById('colour').value))
-                .filter(bundle.phase(document.getElementById('phase').value));
-            status("From " + all.length + " analysed games found " + puzzles.length + " suboptimal moves, filtered to " + filtered.length);
-            filtered.sort((a, b) => a.analysis.halfMove - b.analysis.halfMove);
-            return filtered;
         }
 
         function recompute() {
@@ -93,6 +46,13 @@
 
         function status(x) {
             document.getElementById("log").innerHTML = x;
+            console.log(x);
+        }
+
+        function loadStockfish() {
+            var wasmSupported = typeof WebAssembly === 'object' && WebAssembly.validate(Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00));
+            console.log("wasmSupported:" + wasmSupported);
+            return new Worker(wasmSupported ? 'vendor/stockfish.wasm.js' : 'vendor/stockfish.js');
         }
     </script>
 </body>

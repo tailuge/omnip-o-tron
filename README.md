@@ -24,4 +24,9 @@ yarn test
 
 [Omnip-o-tron](https://tailuge.github.io/omnip-o-tron/index.html)
 
+example FEN:
+```
+rn1qkbnr/pp3pp1/2p1p2p/3p1b2/2PP1B2/4PN2/PP3PPP/RN1QKB1R w KQkq - 0 6
+```
+
 

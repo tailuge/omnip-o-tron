@@ -17,8 +17,8 @@ h2 {
 }
 
 select,
-input {
-  width: 90px;
+input[type="text"] {
+  width: 512px;
   margin: 4px;
   background-color: black;
   color: #cccccc;
