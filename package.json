@@ -8,6 +8,7 @@
   "scripts": {
     "test": "nyc mocha --require ts-node/register -r jsdom-global/register ./test/*.spec.ts",
     "deps": "npx yarn-check --skip-unused",
+    "prettify": "prettier --write --no-semi {src,test}/*",
     "watch": "gulp"
   },
   "dependencies": {

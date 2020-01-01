@@ -10,12 +10,12 @@ export class Puzzle {
   private readonly chess
   private readonly config
   private status
-  
+
   constructor(analysis) {
     this.analysis = analysis
     this.chess = new Chess(this.analysis.fen)
     this.config = this.initialiseConfig()
-    this.status = ''
+    this.status = ""
   }
 
   initialiseConfig() {
@@ -33,11 +33,10 @@ export class Puzzle {
   }
 
   pathFromStatus(path) {
-    return (this.status == '') ? path : path + "." +this.status
+    return this.status == "" ? path : path + "." + this.status
   }
-  
+
   render() {
-    
     return h(this.pathFromStatus("section.blue.merida"), [
       h("div.cg-board-wrap", {
         hook: {
@@ -64,7 +63,8 @@ export class Puzzle {
   url(analysis) {
     const chess = new Chess(analysis.fen)
     let color: Color = toColor(chess)
-    return `https://lichess.org/${analysis.id}/${color}#${analysis.halfMove - 1}`
+    return `https://lichess.org/${analysis.id}/${color}#${analysis.halfMove -
+      1}`
   }
 
   run(el) {
