@@ -34,21 +34,7 @@
             puzzles = [];
             var fen = document.getElementById('fen').value;
             status("Using FEN: " + fen);
-     puzzles = [ new bundle.Puzzle({
-        fen:
-          "rn1qkbnr/pp3pp1/2p1p2p/3p1b2/2PP1B2/4PN2/PP3PPP/RN1QKB1R w KQkq - 0 6",
-        judgment: { name: "Mistake", comment: "Mistake. Best move was a6." },
-        move: {
-          color: "b",
-          from: "f6",
-          to: "e4",
-          flags: "n",
-          piece: "n",
-          san: "Ne4"
-        },
-        halfMove: 22
-      })
-    ]
+            puzzles = bundle.puzzlesFrom(fen);
             boards.setPuzzles(puzzles);
         }
 

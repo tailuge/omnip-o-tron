@@ -16,7 +16,7 @@ export function repairFen(fen, sideToPlay) {
 }
 
 export function successorStates(chess: any) {
-  const moves = chess.moves()
+  const moves = chess.moves({ verbose: true })
   return moves.map(move => nextState(chess, move))
 }
 
@@ -26,6 +26,7 @@ export function nextState(chess: any, move: any) {
   chess.undo()
   return {
     fen: fen,
-    move: move
+    move: move,
+    judgment: { name: move.san }
   }
 }

@@ -2,6 +2,8 @@ import "mocha"
 import { Boards } from "../src/boards"
 import { JSDOM } from "jsdom"
 import { Puzzle } from "../src/puzzle"
+import { successorStates } from "../src/util"
+import { Chess } from "chess.js"
 
 describe("Boards", () => {
   it("Should render example data without exception", done => {
@@ -12,6 +14,10 @@ describe("Boards", () => {
       dom.window.document.getElementById("chessground-examples")
     )
 
+    const chess = new Chess()
+    const s = successorStates(chess)
+    const puzzles = s.map(x => new Puzzle(x))
+    /*
     var puzzles = [
       new Puzzle({
         fen:
@@ -24,11 +30,10 @@ describe("Boards", () => {
           flags: "n",
           piece: "n",
           san: "Ne4"
-        },
-        halfMove: 22
+        }
       })
     ]
-
+*/
     boards.setPuzzles(puzzles)
     done()
   })
