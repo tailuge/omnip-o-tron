@@ -132,9 +132,6 @@ export class Puzzle {
   }
 
   url(analysis) {
-    const chess = new Chess(analysis.fen)
-    let color: Color = toColor(chess)
-    return `https://lichess.org/${analysis.id}/${color}#${analysis.halfMove -
-      1}`
+    return `https://lichess.org/${analysis.id}`
   }
 }
