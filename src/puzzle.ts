@@ -38,27 +38,36 @@ export class Puzzle {
   }
 
   render() {
-    return h("section.blue.merida", [
-      h("div.cg-board-wrap", {
+    return h(
+      "section.blue.merida",
+      {
         hook: {
-          insert: this.runUnit,
-          postpatch: this.runUnit
+          insert: vnode => {
+            this.vnode = vnode
+          }
         }
-      }),
-      h(
-        "p",
+      },
+      [
+        h("div.cg-board-wrap", {
+          hook: {
+            insert: this.runUnit
+          }
+        }),
         h(
-          "a",
-          {
-            props: {
-              href: this.url(this.analysis),
-              target: "_blank"
-            }
-          },
-          this.analysis.judgment.name
+          "p",
+          h(
+            "a",
+            {
+              props: {
+                href: this.url(this.analysis),
+                target: "_blank"
+              }
+            },
+            this.analysis.judgment.name
+          )
         )
-      )
-    ])
+      ]
+    )
   }
 
   redraw() {
@@ -68,7 +77,6 @@ export class Puzzle {
   runUnit = (vnode: VNode) => {
     const el = vnode.elm as HTMLElement
     el.className = "cg-board-wrap"
-    this.vnode = vnode
     this.run(el)
   }
 
@@ -110,16 +118,11 @@ export class Puzzle {
         dests: toDests(this.chess)
       },
       drawable: {
-        shapes: [
-          { orig: orig, dest: dest, brush: "yellow" }
-          //,
-          //this.arrow(this.analysis.move, "red"),
-          //this.arrow(this.analysis.best, "green")
-        ]
+        shapes: [{ orig: orig, dest: dest, brush: "yellow" }]
       }
     })
 
-    this.analysis.judgment.name = " ... "
+    this.analysis.judgment.name = "..."
     console.log("redraw")
     this.redraw()
   }
