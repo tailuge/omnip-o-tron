@@ -7,8 +7,14 @@ describe("Utils", () => {
   it("next states", done => {
     const chess = new Chess()
     const s = successorStates(chess)
-    console.log(s[0])
     expect(s.length).to.equal(20)
     done()
   })
+
+  it("get stockfish", done => {
+      var sf = 1
+      expect(sf).to.not.be.null
+    done()
+  })
+
 })

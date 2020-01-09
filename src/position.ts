@@ -5,8 +5,7 @@ export class Position {
   public bestMove
   public pv
 
-  constructor(fen, targetSquare) {
+  constructor(fen) {
     this.fen = fen
-    this.targetSquare = targetSquare
   }
 }

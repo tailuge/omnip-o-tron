@@ -23,7 +23,6 @@
     <script src="dist/main.js"></script>
     <script>
         /* global bundle */
-
         var boards = new bundle.Boards(document.getElementById('chessground-examples'));
         var sf = loadStockfish();
         var puzzles = [];
@@ -34,12 +33,8 @@
             puzzles = [];
             var fen = document.getElementById('fen').value;
             status("Using FEN: " + fen);
-            puzzles = bundle.puzzlesFrom(fen);
+            puzzles = bundle.puzzlesFrom(fen, sf);
             boards.setPuzzles(puzzles);
-        }
-
-        function recompute() {
-            boards.setPuzzles(filter(puzzles));
         }
 
         function pressEnter(event) {

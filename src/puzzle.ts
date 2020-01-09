@@ -8,6 +8,7 @@ import klass from "snabbdom/modules/class"
 import attributes from "snabbdom/modules/attributes"
 import props from "snabbdom/modules/props"
 import listeners from "snabbdom/modules/eventlisteners"
+import { Evaluate } from "./evaluate"
 
 export class Puzzle {
   patch = init([klass, props, attributes, listeners])
@@ -15,11 +16,13 @@ export class Puzzle {
   readonly analysis
   private readonly chess
   private readonly config
+  public readonly evaluate
   vnode: VNode
 
-  constructor(analysis) {
+  constructor(analysis, evaluate: Evaluate) {
     this.analysis = analysis
     this.chess = new Chess(this.analysis.fen)
+    this.evaluate = evaluate
     this.config = this.initialiseConfig()
   }
 
@@ -125,6 +128,17 @@ export class Puzzle {
     this.analysis.judgment.name = "..."
     console.log("redraw")
     this.redraw()
+    this.triggerEvaluations(this)
+  }
+
+  updateAnalysis() {
+    this.analysis.judgment.name = "+2.0 -->"
+    console.log("update")
+    this.redraw()
+  }
+
+  triggerEvaluations(puzzle) {
+    puzzle.evaluate.analyse(puzzle, () => puzzle.updateAnalysis(), () => puzzle.updateAnalysis())
   }
 
   arrow(move, colour) {
