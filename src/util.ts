@@ -27,6 +27,8 @@ export function nextState(chess: any, move: any) {
   return {
     fen: fen,
     move: move,
-    judgment: { name: move.san }
+    judgment: { name: move.san },
+    evalBefore: "...",
+    evalAfter: "..."
   }
 }

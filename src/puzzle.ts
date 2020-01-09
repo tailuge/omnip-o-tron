@@ -16,12 +16,14 @@ export class Puzzle {
   readonly analysis
   public readonly chess
   private readonly config
+  private readonly turn
   public readonly evaluate: Evaluate
   vnode: VNode
 
   constructor(analysis, evaluate: Evaluate) {
     this.analysis = analysis
     this.chess = new Chess(this.analysis.fen)
+    this.turn = this.chess.turn()
     this.evaluate = evaluate
     this.config = this.initialiseConfig()
   }
@@ -117,7 +119,8 @@ export class Puzzle {
     this.analysis.played = this.chess
       .history({ verbose: true })
       .slice(-1)
-      .pop().san
+      .pop()
+
     cg.set({
       turnColor: toColor(this.chess),
       movable: {
@@ -126,34 +129,47 @@ export class Puzzle {
       },
       drawable: {
         shapes: [
-          { orig: orig, dest: dest, brush: "yellow" },
+          this.arrow(this.analysis.played, "yellow"),
           this.arrow(this.analysis.move, "red")
         ]
       }
     })
 
-    this.analysis.judgment.name = `${this.analysis.move.san} ... `
+    this.analysis.judgment.name = this.formatReport()
     this.redraw()
     this.triggerEvaluations(this)
   }
 
   updateAnalysisBefore(x) {
-    console.log("update", x)
-    this.analysis.evalBefore = this.format(x.score)
-    this.analysis.judgment.name = `${this.analysis.move.san} (${this.analysis.evalBefore}) --> ${this.analysis.played} ... `
+    console.log(x)
+    console.log(this.turn)
+    this.analysis.evalBefore = this.format(
+      x.score * (this.turn == "b" ? -1 : 1)
+    )
+    this.analysis.bestMove = {
+      from: x.bestMove.substring(0, 2),
+      to: x.bestMove.substring(2, 4)
+    }
+    this.analysis.judgment.name = this.formatReport()
     this.redraw()
+    console.log(this.analysis.bestMove)
   }
 
   updateAnalysisAfter(x) {
-    console.log("update", x)
+    console.log(x)
     this.analysis.evalAfter = this.format(x.score)
-    this.analysis.judgment.name = `${this.analysis.move.san} (${this.analysis.evalBefore}) --> ${this.analysis.played} (${this.analysis.evalAfter})`
+    this.analysis.judgment.name = this.formatReport()
     this.redraw()
   }
 
   format(n: number): string {
     return n.toFixed(2)
   }
+
+  formatReport() {
+    return (this.analysis.judgment.name = `${this.analysis.move.san} (${this.analysis.evalBefore}) --> ${this.analysis.played.san} (${this.analysis.evalAfter})`)
+  }
+
   triggerEvaluations(puzzle) {
     puzzle.evaluate.analyse(
       puzzle,
