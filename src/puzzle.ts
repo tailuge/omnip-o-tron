@@ -9,6 +9,7 @@ import attributes from "snabbdom/modules/attributes"
 import props from "snabbdom/modules/props"
 import listeners from "snabbdom/modules/eventlisteners"
 import { Evaluate } from "./evaluate"
+import { build } from "search-params"
 
 export class Puzzle {
   patch = init([klass, props, attributes, listeners])
@@ -65,7 +66,7 @@ export class Puzzle {
             "a",
             {
               props: {
-                href: this.url(this.analysis),
+                href: this.url(this.chess.fen()),
                 target: "_blank"
               }
             },
@@ -127,21 +128,6 @@ export class Puzzle {
       this.arrow(this.analysis.played, "yellow"),
       this.arrow(this.analysis.move, "red")
     ])
-    /*
-    cg.set({
-      turnColor: toColor(this.chess),
-      movable: {
-        color: toColor(this.chess),
-        dests: toDests(this.chess)
-      },
-      drawable: {
-        shapes: [
-          this.arrow(this.analysis.played, "yellow"),
-          this.arrow(this.analysis.move, "red")
-        ]
-      }
-    })
-*/
     this.analysis.judgment.name = this.formatReport()
     this.redraw()
     this.triggerEvaluations(this)
@@ -177,7 +163,7 @@ export class Puzzle {
 
   updateAnalysisAfter(x) {
     console.log(x)
-    this.analysis.evalAfter = this.format(x.score)
+    this.analysis.evalAfter = this.format(x.score * (this.turn == "w" ? -1 : 1))
     this.analysis.judgment.name = this.formatReport()
 
     this.setShapes([
@@ -209,7 +195,7 @@ export class Puzzle {
     return { orig: move.from, dest: move.to, brush: colour }
   }
 
-  url(analysis) {
-    return `https://lichess.org/${analysis.id}`
+  url(fen) {
+    return "./index.html?" + build({ fen: fen })
   }
 }

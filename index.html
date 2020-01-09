@@ -1,57 +1,72 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="assets/chessground.css" async>
-    <link rel="stylesheet" href="assets/theme.css" async>
-    <link rel="stylesheet" href="assets/examples.css">
-    <link rel="icon" type="image/png" href="assets/omnipotron.png" />
-    <title>Omnip-o-tron</title>
-    <meta name="Description" content="Be ready for any move" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="assets/chessground.css" async>
+	<link rel="stylesheet" href="assets/theme.css" async>
+	<link rel="stylesheet" href="assets/examples.css">
+	<link rel="icon" type="image/png" href="assets/omnipotron.png" />
+	<title>Omnip-o-tron</title>
+	<meta name="Description" content="Be ready for any move" />
 </head>
 
 <body>
-    <h2><a href="https://github.com/tailuge/omnip-o-tron">Omnip-o-tron</a></h2>
-    <div class="inputs">
-        FEN:
-        <input type="text" id="fen" name="fen" value="rn1qkbnr/pp3pp1/2p1p2p/3p1b2/2PP1B2/4PN2/PP3PPP/RN1QKB1R w KQkq - 0 6" onkeydown="pressEnter(event)" /> 
-        <input type="submit" id="Search" value="Begin" onclick="search()">
+	<h2><a href="https://github.com/tailuge/omnip-o-tron">Omnip-o-tron</a></h2>
+	<div class="inputs">
+		FEN:
+		<input type="text" id="fen" name="fen" value="rn1qkbnr/pp3pp1/2p1p2p/3p1b2/2PP1B2/4PN2/PP3PPP/RN1QKB1R w KQkq - 0 6" onkeydown="pressEnter(event)" />
+		<input type="submit" id="Search" value="Begin" onclick="search()">
     </div>
 
-    <pre class="inputs" id="log"></pre>
-    <div id="chessground-examples"></div>
-    <script src="dist/main.js"></script>
-    <script>
-        /* global bundle */
-        var boards = new bundle.Boards(document.getElementById('chessground-examples'));
+		<pre class="inputs" id="log"></pre>
+		<div id="chessground-examples"></div>
+		<script src="dist/main.js"></script>
+		<script>
+			/* global bundle */
+        var boards = new bundle.Boards(elt('chessground-examples'));
         var sf = loadStockfish();
-        var puzzles = [];
-        var all = [];
+        var stockfishQueue = new bundle.StockfishQueue(sf, ()=>{})
+        var params = bundle.parse(window.location.href);
+        if (params.fen) {
+            elt('fen').value = params.fen;
+        }
 
         function search() {
-            all = [];
-            puzzles = [];
-            var fen = document.getElementById('fen').value;
+            var fen = elt('fen').value;
             status("Using FEN: " + fen);
-            puzzles = bundle.puzzlesFrom(fen, sf);
+            var puzzles = bundle.puzzlesFrom(fen, stockfishQueue);
             boards.setPuzzles(puzzles);
+            updateUrlWithState();
         }
 
         function pressEnter(event) {
-            (event.keyCode == 13) && document.getElementById('Search').click();
+            (event.keyCode == 13) && elt('Search').click();
         }
 
         function status(x) {
-            document.getElementById("log").innerHTML = x;
+            elt("log").innerHTML = x;
             console.log(x);
         }
 
+function elt(e) {
+    return document.getElementById(e);
+  }
+
+function updateUrlWithState() {
+    if (history.pushState) {
+      var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" +
+        bundle.build({ fen: elt('fen').value});
+      window.history.pushState({
+        path: newurl
+      }, '', newurl);
+    }
+  }
         function loadStockfish() {
             var wasmSupported = typeof WebAssembly === 'object' && WebAssembly.validate(Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00));
             console.log("wasmSupported:" + wasmSupported);
             return new Worker(/*wasmSupported ? 'vendor/stockfish.wasm.js' : */'vendor/stockfish.js');
         }
-    </script>
+		</script>
 </body>
 
 </html>

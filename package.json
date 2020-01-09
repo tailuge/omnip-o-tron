@@ -19,7 +19,8 @@
     "mem": "^6.0.1",
     "oboe": "^2.1.5",
     "page": "^1.11.5",
-    "snabbdom": "^0.7.4"
+    "snabbdom": "^0.7.4",
+    "search-params": "^3.0.0"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.7",
