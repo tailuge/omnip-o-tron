@@ -14,9 +14,9 @@ export class Puzzle {
   patch = init([klass, props, attributes, listeners])
 
   readonly analysis
-  private readonly chess
+  public readonly chess
   private readonly config
-  public readonly evaluate
+  public readonly evaluate: Evaluate
   vnode: VNode
 
   constructor(analysis, evaluate: Evaluate) {
@@ -121,7 +121,10 @@ export class Puzzle {
         dests: toDests(this.chess)
       },
       drawable: {
-        shapes: [{ orig: orig, dest: dest, brush: "yellow" }]
+        shapes: [
+          { orig: orig, dest: dest, brush: "yellow" },
+          this.arrow(this.analysis.move, "red")
+        ]
       }
     })
 
@@ -131,14 +134,24 @@ export class Puzzle {
     this.triggerEvaluations(this)
   }
 
-  updateAnalysis() {
-    this.analysis.judgment.name = "+2.0 -->"
-    console.log("update")
+  updateAnalysisBefore(x) {
+    console.log("update", x)
+    this.analysis.judgment.name = x.score + " --> "
+    this.redraw()
+  }
+
+  updateAnalysisAfter(x) {
+    console.log("update", x)
+    this.analysis.judgment.name += x.score
     this.redraw()
   }
 
   triggerEvaluations(puzzle) {
-    puzzle.evaluate.analyse(puzzle, () => puzzle.updateAnalysis(), () => puzzle.updateAnalysis())
+    puzzle.evaluate.analyse(
+      puzzle,
+      x => puzzle.updateAnalysisBefore(x),
+      x => puzzle.updateAnalysisAfter(x)
+    )
   }
 
   arrow(move, colour) {

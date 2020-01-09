@@ -37,13 +37,10 @@ export class Event {
   }
 
   private scoreCp(v) {
-    if (v < 150 && v > -150) {
-      return "drawn"
-    }
-    return v > 0 ? "win" : "lose"
+    return v / 100
   }
 
   private scoreMate(v) {
-    return v > 0 ? "win" : "lose"
+    return v > 0 ? 50 : -50
   }
 }

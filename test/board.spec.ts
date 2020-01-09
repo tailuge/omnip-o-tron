@@ -22,7 +22,7 @@ describe("Boards", () => {
       postMessage: nop,
       addEventListener: ({}, {}) => {}
     }
-    
+
     const chess = new Chess()
     const s = successorStates(chess)
     const stockfishqueue = new StockfishQueue(stockfishInterface, nop)

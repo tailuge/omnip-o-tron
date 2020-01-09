@@ -9,10 +9,17 @@ export class Evaluate {
     this.stockfishQueue = stockfishQueue
   }
 
-  public analyse(puzzle: Puzzle, beforeAnalysisComplete, afterAnalysisComplete) {
-      console.log(afterAnalysisComplete)
-      this.stockfishQueue.enqueue(new Position(puzzle.analysis.fen), beforeAnalysisComplete)
+  public analyse(
+    puzzle: Puzzle,
+    priorAnalysisComplete,
+    posteriorAnalysisComplete
+  ) {
+    this.stockfishQueue.enqueue(new Position(puzzle.analysis.fen), x => {
+      priorAnalysisComplete(x)
+      this.stockfishQueue.enqueue(
+        new Position(puzzle.chess.fen()),
+        posteriorAnalysisComplete
+      )
+    })
   }
-
-
 }

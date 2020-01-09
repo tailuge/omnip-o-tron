@@ -8,7 +8,10 @@ export { Boards } from "./boards"
 export { Puzzle } from "./puzzle"
 
 export function puzzlesFrom(fen: String, sf) {
-  const stockfishqueue = new StockfishQueue(sf,()=>{})
+  const stockfishqueue = new StockfishQueue(
+    sf,
+    () => {} /*x => console.log(x)*/
+  )
   const evaluate = new Evaluate(stockfishqueue)
   const chess = new Chess(fen)
   const s = successorStates(chess)

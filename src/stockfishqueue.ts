@@ -20,7 +20,7 @@ export class StockfishQueue {
   constructor(stockfish, log) {
     this.stockfish = stockfish
     this.log = log
-    this.depth = 8
+    this.depth = 12
     this.send("setoption name MultiPV value 1")
     this.stockfish.addEventListener("message", event => {
       this.sfEventHandler(event.data)

@@ -12,9 +12,8 @@ describe("Utils", () => {
   })
 
   it("get stockfish", done => {
-      var sf = 1
-      expect(sf).to.not.be.null
+    var sf = 1
+    expect(sf).to.not.be.null
     done()
   })
-
 })
