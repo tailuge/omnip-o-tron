@@ -114,6 +114,10 @@ export class Puzzle {
 
   moveAndResult(cg, orig, dest) {
     this.chess.move({ from: orig, to: dest })
+    this.analysis.played = this.chess
+      .history({ verbose: true })
+      .slice(-1)
+      .pop().san
     cg.set({
       turnColor: toColor(this.chess),
       movable: {
@@ -128,24 +132,28 @@ export class Puzzle {
       }
     })
 
-    this.analysis.judgment.name = "..."
-    console.log("redraw")
+    this.analysis.judgment.name = `${this.analysis.move.san} ... `
     this.redraw()
     this.triggerEvaluations(this)
   }
 
   updateAnalysisBefore(x) {
     console.log("update", x)
-    this.analysis.judgment.name = x.score + " --> "
+    this.analysis.evalBefore = this.format(x.score)
+    this.analysis.judgment.name = `${this.analysis.move.san} (${this.analysis.evalBefore}) --> ${this.analysis.played} ... `
     this.redraw()
   }
 
   updateAnalysisAfter(x) {
     console.log("update", x)
-    this.analysis.judgment.name += x.score
+    this.analysis.evalAfter = this.format(x.score)
+    this.analysis.judgment.name = `${this.analysis.move.san} (${this.analysis.evalBefore}) --> ${this.analysis.played} (${this.analysis.evalAfter})`
     this.redraw()
   }
 
+  format(n: number): string {
+    return n.toFixed(2)
+  }
   triggerEvaluations(puzzle) {
     puzzle.evaluate.analyse(
       puzzle,
