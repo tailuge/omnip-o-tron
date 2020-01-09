@@ -18,6 +18,7 @@ export class Puzzle {
   private readonly config
   private readonly turn
   public readonly evaluate: Evaluate
+  private cg
   vnode: VNode
 
   constructor(analysis, evaluate: Evaluate) {
@@ -87,12 +88,13 @@ export class Puzzle {
 
   run(el) {
     const cg = Chessground(el, this.config)
+    this.cg = cg
     this.originalMove(cg)
     cg.set({
       movable: {
         events: {
           after: (orig, dest) => {
-            this.moveAndResult(cg, orig, dest)
+            this.moveAndResult(orig, dest)
           }
         }
       },
@@ -114,13 +116,18 @@ export class Puzzle {
     })
   }
 
-  moveAndResult(cg, orig, dest) {
+  moveAndResult(orig, dest) {
     this.chess.move({ from: orig, to: dest })
     this.analysis.played = this.chess
       .history({ verbose: true })
       .slice(-1)
       .pop()
 
+    this.setShapes([
+      this.arrow(this.analysis.played, "yellow"),
+      this.arrow(this.analysis.move, "red")
+    ])
+    /*
     cg.set({
       turnColor: toColor(this.chess),
       movable: {
@@ -134,10 +141,23 @@ export class Puzzle {
         ]
       }
     })
-
+*/
     this.analysis.judgment.name = this.formatReport()
     this.redraw()
     this.triggerEvaluations(this)
+  }
+
+  setShapes(shapes) {
+    this.cg.set({
+      turnColor: toColor(this.chess),
+      movable: {
+        color: toColor(this.chess),
+        dests: toDests(this.chess)
+      },
+      drawable: {
+        shapes: shapes
+      }
+    })
   }
 
   updateAnalysisBefore(x) {
@@ -159,6 +179,13 @@ export class Puzzle {
     console.log(x)
     this.analysis.evalAfter = this.format(x.score)
     this.analysis.judgment.name = this.formatReport()
+
+    this.setShapes([
+      this.arrow(this.analysis.played, "yellow"),
+      this.arrow(this.analysis.move, "red"),
+      this.arrow(this.analysis.bestMove, "green")
+    ])
+
     this.redraw()
   }
 
