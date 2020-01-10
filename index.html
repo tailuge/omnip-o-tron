@@ -29,6 +29,7 @@
         var params = bundle.parse(window.location.href);
         if (params.fen) {
             elt('fen').value = params.fen;
+            search();
         }
 
         function search() {
@@ -48,19 +49,20 @@
             console.log(x);
         }
 
-function elt(e) {
-    return document.getElementById(e);
-  }
+        function elt(e) {
+            return document.getElementById(e);
+        }
 
-function updateUrlWithState() {
-    if (history.pushState) {
-      var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" +
-        bundle.build({ fen: elt('fen').value});
-      window.history.pushState({
-        path: newurl
-      }, '', newurl);
-    }
-  }
+        function updateUrlWithState() {
+            if (history.pushState) {
+              var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" +
+                bundle.build({ fen: elt('fen').value});
+                window.history.pushState({
+                    path: newurl
+                  }, '', newurl);
+            }
+        }
+        
         function loadStockfish() {
             var wasmSupported = typeof WebAssembly === 'object' && WebAssembly.validate(Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00));
             console.log("wasmSupported:" + wasmSupported);

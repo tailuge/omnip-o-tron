@@ -156,6 +156,10 @@ export class Puzzle {
       from: x.bestMove.substring(0, 2),
       to: x.bestMove.substring(2, 4)
     }
+    this.setShapes([
+      this.arrow(this.analysis.played, "yellow"),
+      this.arrow(this.analysis.move, "red")
+    ])
     this.analysis.judgment.name = this.formatReport()
     this.redraw()
     console.log(this.analysis.bestMove)
