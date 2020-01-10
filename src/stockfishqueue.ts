@@ -17,10 +17,10 @@ export class StockfishQueue {
   private readonly workItems: WorkItem[] = []
   public depth: number
 
-  constructor(stockfish, log) {
+  constructor(stockfish, log, depth) {
     this.stockfish = stockfish
     this.log = log
-    this.depth = 12
+    this.depth = depth
     this.send("setoption name MultiPV value 1")
     this.stockfish.addEventListener("message", event => {
       this.sfEventHandler(event.data)

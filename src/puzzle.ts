@@ -60,8 +60,7 @@ export class Puzzle {
             insert: this.runUnit
           }
         }),
-        h(
-          "p",
+        h("p", [
           h(
             "a",
             {
@@ -71,8 +70,18 @@ export class Puzzle {
               }
             },
             this.analysis.judgment.name
+          ),
+          h(
+            "a",
+            {
+              props: {
+                href: this.lichessUrl(this.chess.fen()),
+                target: "_blank"
+              }
+            },
+            "🔎"
           )
-        )
+        ])
       ]
     )
   }
@@ -201,5 +210,9 @@ export class Puzzle {
 
   url(fen) {
     return "./index.html?" + build({ fen: fen })
+  }
+
+  lichessUrl(fen) {
+    return `https://lichess.org/analysis/standard/${fen}`
   }
 }

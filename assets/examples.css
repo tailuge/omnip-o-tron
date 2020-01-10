@@ -24,6 +24,11 @@ input[type="text"] {
   color: #cccccc;
 }
 
+.tagline {
+  font-style: italic;
+  text-align: center;
+}
+
 #Search {
   background-color: lightgrey;
   color: black;

@@ -25,7 +25,7 @@ describe("Boards", () => {
 
     const chess = new Chess()
     const s = successorStates(chess)
-    const stockfishqueue = new StockfishQueue(stockfishInterface, nop)
+    const stockfishqueue = new StockfishQueue(stockfishInterface, nop, 8)
     const puzzles = s.map(x => new Puzzle(x, new Evaluate(stockfishqueue)))
     boards.setPuzzles(puzzles)
     done()
