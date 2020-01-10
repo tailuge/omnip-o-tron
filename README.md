@@ -24,9 +24,13 @@ yarn test
 
 [Omnip-o-tron](https://tailuge.github.io/omnip-o-tron/index.html)
 
-example FEN:
-```
-rn1qkbnr/pp3pp1/2p1p2p/3p1b2/2PP1B2/4PN2/PP3PPP/RN1QKB1R w KQkq - 0 6
-```
+KGA
+
+[Bertin Bishop Sac](https://tailuge.github.io/omnip-o-tron/index.html?fen=rnbqk2r%2Fppp2Bpp%2F5n2%2F8%2F4P2b%2F5N2%2FPPPP3p%2FRNBQ1R1K%20b%20kq%20-%200%209)
+
+Endgame
+
+[Defend RvP](https://tailuge.github.io/omnip-o-tron/index.html?fen=5K2%2Fr3P3%2F6k1%2F8%2F8%2F8%2F8%2F8%20b%20-%20-%202%202)
+
 
 

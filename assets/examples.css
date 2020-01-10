@@ -27,6 +27,7 @@ input[type="text"] {
 .tagline {
   font-style: italic;
   text-align: center;
+  font-size:x-small;
 }
 
 #Search {
@@ -71,4 +72,5 @@ input[type="text"] {
   border-radius: 3px;
   padding: 2px;
   margin: 2px 2px;
+  text-align: center;
 }
