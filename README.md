@@ -30,7 +30,7 @@ KGA
 
 Endgame
 
-[Defend RvP](https://tailuge.github.io/omnip-o-tron/index.html?fen=5K2%2Fr3P3%2F6k1%2F8%2F8%2F8%2F8%2F8%20b%20-%20-%202%202)
+[Defend RvP](https://tailuge.github.io/omnip-o-tron/index.html?fen=8%2F4K3%2Fr3P3%2F8%2F7k%2F8%2F8%2F8%20b%20-%20-%200%201)
 
 
 
