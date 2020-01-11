@@ -127,11 +127,15 @@ export class Puzzle {
   }
 
   moveAndResult(orig, dest) {
-    this.chess.move({ from: orig, to: dest })
+    this.chess.move({ from: orig, to: dest, promotion:'q' })
     this.analysis.played = this.chess
       .history({ verbose: true })
       .slice(-1)
       .pop()
+
+    this.cg.set({
+      fen: this.chess.fen(),
+    })
 
     this.setShapes([
       this.arrow(this.analysis.played, "yellow"),
