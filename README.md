@@ -24,11 +24,15 @@ yarn test
 
 [Omnip-o-tron](https://tailuge.github.io/omnip-o-tron/index.html)
 
-KGA
+#### KGA
 
 [Bertin Bishop Sac](https://tailuge.github.io/omnip-o-tron/index.html?fen=rnbqk2r%2Fppp2Bpp%2F5n2%2F8%2F4P2b%2F5N2%2FPPPP3p%2FRNBQ1R1K%20b%20kq%20-%200%209)
 
-Endgame
+#### Caro Kann
+
+[Two knights](https://tailuge.github.io/omnip-o-tron/index.html?fen=rn2kbnr%2Fpp2ppp1%2F2pq2bp%2F4N3%2F7P%2F6N1%2FPPPP1PP1%2FR1BQKB1R%20w%20KQkq%20-%202%208)
+
+#### Endgame
 
 [Defend RvP](https://tailuge.github.io/omnip-o-tron/index.html?fen=8%2F4K3%2Fr3P3%2F8%2F7k%2F8%2F8%2F8%20b%20-%20-%200%201)
 
