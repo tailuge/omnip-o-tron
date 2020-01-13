@@ -127,14 +127,14 @@ export class Puzzle {
   }
 
   moveAndResult(orig, dest) {
-    this.chess.move({ from: orig, to: dest, promotion:'q' })
+    this.chess.move({ from: orig, to: dest, promotion: "q" })
     this.analysis.played = this.chess
       .history({ verbose: true })
       .slice(-1)
       .pop()
 
     this.cg.set({
-      fen: this.chess.fen(),
+      fen: this.chess.fen()
     })
 
     this.setShapes([
@@ -160,8 +160,6 @@ export class Puzzle {
   }
 
   updateAnalysisBefore(x) {
-    console.log(x)
-    console.log(this.turn)
     this.analysis.evalBefore = this.format(
       x.score * (this.turn == "b" ? -1 : 1)
     )
@@ -179,7 +177,7 @@ export class Puzzle {
   }
 
   updateAnalysisAfter(x) {
-    console.log(x)
+    console.log(JSON.stringify(x))
     this.analysis.evalAfter = this.format(x.score * (this.turn == "w" ? -1 : 1))
     this.analysis.judgment.name = this.formatReport()
 

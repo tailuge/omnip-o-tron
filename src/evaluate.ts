@@ -14,12 +14,13 @@ export class Evaluate {
     priorAnalysisComplete,
     posteriorAnalysisComplete
   ) {
-    this.stockfishQueue.enqueue(new Position(puzzle.analysis.fen), x => {
-      priorAnalysisComplete(x)
-      this.stockfishQueue.enqueue(
-        new Position(puzzle.chess.fen()),
-        posteriorAnalysisComplete
-      )
-    })
+    this.stockfishQueue.enqueue(
+      new Position(puzzle.analysis.fen),
+      priorAnalysisComplete
+    )
+    this.stockfishQueue.enqueue(
+      new Position(puzzle.chess.fen()),
+      posteriorAnalysisComplete
+    )
   }
 }

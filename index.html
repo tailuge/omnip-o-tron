@@ -31,7 +31,7 @@
 
         var boards = new bundle.Boards(elt('chessground-examples'));
         var sf = loadStockfish();
-        var stockfishQueue = new bundle.StockfishQueue(sf, ()=>{}, elt('depth').value)
+        var stockfishQueue = new bundle.StockfishQueue(sf, (x)=>{console.log(x)}, elt('depth').value)
         var params = bundle.parse(window.location.href);
         if (params.fen) {
             elt('fen').value = params.fen;
