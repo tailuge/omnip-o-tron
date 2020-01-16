@@ -60,30 +60,34 @@ export class Puzzle {
             insert: this.runUnit
           }
         }),
-        h("p", [
-          h(
-            "a",
-            {
-              props: {
-                href: this.url(this.chess.fen()),
-                target: "_blank"
-              }
-            },
-            this.analysis.judgment.name
-          ),
-          h(
-            "a",
-            {
-              props: {
-                href: this.lichessUrl(this.chess.fen()),
-                target: "_blank"
-              }
-            },
-            "🔎"
-          )
-        ])
+        this.footer()
       ]
     )
+  }
+
+  footer() {
+    return h("p.initial", [
+      h(
+        "a",
+        {
+          props: {
+            href: this.url(this.chess.fen()),
+            target: "_blank"
+          }
+        },
+        this.analysis.judgment.name
+      ),
+      h(
+        "a",
+        {
+          props: {
+            href: this.lichessUrl(this.chess.fen()),
+            target: "_blank"
+          }
+        },
+        "🔎"
+      )
+    ])
   }
 
   redraw() {
