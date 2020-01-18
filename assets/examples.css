@@ -74,3 +74,9 @@ input[type="text"] {
   margin: 2px 2px;
   text-align: center;
 }
+
+.initial {
+  background-color: darkslategrey;
+  border-radius: 3px;
+  margin: 1px 1px;
+}

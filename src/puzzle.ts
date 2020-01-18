@@ -1,7 +1,7 @@
 import { Chess } from "chess.js"
 import { Chessground } from "chessground"
 import { Color } from "chessground/types"
-import { toDests, toColor } from "./util"
+import { toDests, toColor, toOtherColor } from "./util"
 import { h, init } from "snabbdom"
 import { VNode } from "snabbdom/vnode"
 import klass from "snabbdom/modules/class"
@@ -31,8 +31,11 @@ export class Puzzle {
   }
 
   initialiseConfig() {
-    let color: Color = toColor(this.chess)
+    let color: Color = this.initialPosition()
+      ? toOtherColor(this.chess)
+      : toColor(this.chess)
     return {
+      viewOnly: this.initialPosition(),
       orientation: color,
       turnColor: color,
       fen: this.analysis.fen,
@@ -42,6 +45,10 @@ export class Puzzle {
         dests: toDests(this.chess)
       }
     }
+  }
+
+  initialPosition() {
+    return this.analysis.move == "Initial Position"
   }
 
   render() {
@@ -66,7 +73,7 @@ export class Puzzle {
   }
 
   footer() {
-    return h("p.initial", [
+    return h(this.initialPosition() ? "p.initial" : "p", [
       h(
         "a",
         {

@@ -7,7 +7,7 @@ describe("Utils", () => {
   it("next states", done => {
     const chess = new Chess()
     const s = successorStates(chess)
-    expect(s.length).to.equal(20)
+    expect(s.length).to.equal(21)
     done()
   })
 })

@@ -41,7 +41,7 @@
         function search() {
             var fen = elt('fen').value;
             var puzzles = bundle.puzzlesFrom(fen, stockfishQueue);
-            status("There are " + puzzles.length + " continuations from this position - find the best replies!");
+            status("There are " + (puzzles.length - 1) + " continuations from this position - find the best replies!");
             boards.setPuzzles([]);
             boards.setPuzzles(puzzles);
             updateUrlWithState();
