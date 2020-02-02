@@ -15,10 +15,6 @@ export function toOtherColor(chess: any) {
   return chess.turn() === "w" ? "black" : "white"
 }
 
-export function repairFen(fen, sideToPlay) {
-  return fen.split(" ")[0] + (sideToPlay == "w" ? " w - - 0 2" : " b - - 0 1")
-}
-
 export function successorStates(chess: any) {
   const moves = chess
     .moves({ verbose: true })
